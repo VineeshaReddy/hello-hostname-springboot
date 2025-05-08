@@ -24,6 +24,12 @@ jobs:
       - name: Run app
         run: java -jar target/hello-hostname-1.0.0.jar &
         
+      - name: Archive Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: maven-web-application
+          path: target/*.jar
+          
       - name: Test app
         run: |
           sleep 10  # wait for server to start
