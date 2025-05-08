@@ -1,0 +1,30 @@
+name: Build and Run Spring App
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build app
+        run: mvn clean package
+
+      - name: Run app
+        run: java -jar target/hello-hostname-1.0.0.jar &
+        
+      - name: Test app
+        run: |
+          sleep 10  # wait for server to start
+          curl http://localhost:8080
